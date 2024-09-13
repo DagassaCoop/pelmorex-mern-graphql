@@ -1,0 +1,44 @@
+scalar DateTime
+
+type User {
+  _id: ID!
+  username: String!
+  email: String!
+  password: String!
+  status: String!
+  createdAt: DateTime
+}
+
+type JwtToken {
+  token: String!
+}
+
+type UserWithToken {
+  user: User!
+  userJwtToken: JwtToken!
+}
+
+input SignUpInput {
+  username: String!
+  email: String!
+  password: String!
+  status: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Query {
+  user(id: ID!): User
+  authUser: User
+  users: [User]
+}
+
+type Mutation {
+  signUp(input: SignUpInput!): UserWithToken
+  login(input: LoginInput!): UserWithToken
+  updateUserStatus(status: String!): User
+  deleteUser(id: ID!): User
+}

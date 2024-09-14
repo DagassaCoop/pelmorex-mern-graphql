@@ -32,7 +32,6 @@ input LoginInput {
 
 type Query {
   user(id: ID!): User
-  authUser: User
   users: [User]
 }
 

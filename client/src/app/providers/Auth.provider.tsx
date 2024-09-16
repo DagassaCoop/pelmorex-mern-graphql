@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { skipToken, useMutation, useQuery, useSuspenseQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 // Types
 import { TUser, TUserWithToken, TNewUser } from "../types/User.type";
@@ -98,6 +98,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   const logOut = () => {
     setAuthUser(null);
     localStorage.removeItem("token");
+    navigate('/login')
   };
 
   useEffect(() => {

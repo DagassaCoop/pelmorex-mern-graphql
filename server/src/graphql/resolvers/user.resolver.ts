@@ -4,6 +4,8 @@ import jsonwebtoken from "jsonwebtoken";
 
 import UserModel from "../../db/models/user.model";
 
+const saltRounds = 10
+
 const userResolver = {
   Query: {
     async users(
@@ -57,7 +59,7 @@ const userResolver = {
       const userToCreate = await UserModel.create({
         username,
         email,
-        password: await bcrypt.hash(password, 10),
+        password: await bcrypt.hash(password, saltRounds),
         status,
         createdAt: new Date()
       });
@@ -90,8 +92,7 @@ const userResolver = {
 
       if (!user) throw new Error("No user with that email");
 
-      // TODO: add TS
-      const validPassword = bcrypt.compare(user.password!, password);
+      const validPassword = user.password === await bcrypt.hash(password, saltRounds)
 
       if (!validPassword) throw new Error("Incorrect password");
 

@@ -1,29 +1,26 @@
-import { useMutation } from "@apollo/client"
-import { SIGNUP } from "../../graphql/mutations/user.mutation"
+// Hooks
+import useAuthContext from "../../hooks/useAuthContext.hook";
+
+// Types
+import { EUserStatus } from "../../app/types/User.type";
 
 export default function Registration() {
-    const [signUp, {data, loading, error}] = useMutation(SIGNUP)
+  const { authSighUp } = useAuthContext();
 
-    const sighUpHandler = async (e: any) => {
-        e.preventDefault()
+  const sighUpHandler = async (e: any) => {
+    e.preventDefault();
+    authSighUp({
+      username: "free",
+      email: "free2@gmail.com",
+      password: "1234",
+      status: EUserStatus[EUserStatus.free],
+    });
+  };
 
-        try {
-            const res = await signUp()
-            const token = res.data.login.userJwtToken.token
-
-            localStorage.setItem("token", token)
-        } catch (error) {
-            console.log("Registration > sighUpHandler > Error >> ", error)
-        }
-    }
-
-    if (loading) return 'Submitting...';
-    if (error) return `Submission error! ${error.message}`;
-
-    return (
-        <div>
-            <h1>Registration Title</h1>
-            <button onClick={sighUpHandler}>Register new User</button>
-        </div>
-    )
+  return (
+    <div>
+      <h1>Registration Title</h1>
+      <button onClick={sighUpHandler}>Register new User</button>
+    </div>
+  );
 }

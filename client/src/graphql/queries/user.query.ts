@@ -13,7 +13,8 @@ export const GET_AUTH_USER = gql`
 query AuthUser {
   authUser {
     email
-    username  
+    username
+    status
   }
 }
 `

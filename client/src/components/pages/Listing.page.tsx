@@ -1,18 +1,13 @@
-import { useQuery } from "@apollo/client"
-import { GET_AUTH_USER } from "../../graphql/queries/user.query"
+import useAuthContext from "../../hooks/useAuthContext.hook"
 
 
 export default function Listing() {
-    const {data, error, loading} = useQuery(GET_AUTH_USER)
-
-    if (error && loading) return null
-
-    // console.log(data)
+    const {authUser} = useAuthContext()
 
     return (
         <div>
             <h1>Listing</h1>
-            <p>Hello {data?.authUser.username}</p>
+            <p>Hello {authUser?.username}</p>
         </div>
     )
 }

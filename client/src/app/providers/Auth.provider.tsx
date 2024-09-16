@@ -1,12 +1,13 @@
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { skipToken, useMutation, useQuery, useSuspenseQuery } from "@apollo/client";
 
 // Types
 import { TUser, TUserWithToken, TNewUser } from "../types/User.type";
 
 // Mutations & Queries
 import { LOGIN, SIGNUP } from "../../graphql/mutations/user.mutation";
+import { GET_AUTH_USER } from "../../graphql/queries/user.query";
 
 type TAuthContext = {
   authUser: TUser | null;
@@ -21,6 +22,14 @@ export const AuthContext = createContext<TAuthContext | null>(null);
 export default function AuthProvider({ children }: PropsWithChildren) {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { pathname } = location;
+  const inAuthPages = pathname === "/login" || pathname === "/registration";
+  const token = localStorage.getItem("token");
+
+  const {data: authUserData, loading: authUserLoading, error: authUserError} = useQuery<{
+    authUser: TUser
+  }>(GET_AUTH_USER, {skip: !Boolean(token)})
 
   // State
   const [authUser, setAuthUser] = useState<TUser | null>(null);
@@ -91,15 +100,15 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     localStorage.removeItem("token");
   };
 
-  const { pathname } = location;
-  const inAuthPages = pathname === "/login" || pathname === "/registration";
-  const token = localStorage.getItem("token");
-
   useEffect(() => {
     if (!inAuthPages && !authUser && !token) {
       navigate("/login");
     }
   }, [pathname]);
+
+  useEffect(() => {
+    if (!authUserLoading || !authUserError) setAuthUser(authUserData?.authUser ?? null)
+  }, [authUserLoading])
 
   return (
     <AuthContext.Provider

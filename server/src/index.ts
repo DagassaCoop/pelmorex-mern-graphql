@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import http from "http";
 import dotenv from "dotenv";
-import { expressjwt, Request as JWTRequest } from "express-jwt";
+import { expressjwt } from "express-jwt";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
@@ -32,7 +32,7 @@ const start = async () => {
 
   app.use(
     "/graphql",
-    cors<cors.CorsRequest>(),
+    cors<cors.CorsRequest>({ origin: 'http://localhost:3000', credentials: true }),
     express.json(),
     express.urlencoded({ extended: false }),
     auth,

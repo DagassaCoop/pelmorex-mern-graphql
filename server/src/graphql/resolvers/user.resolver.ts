@@ -30,6 +30,13 @@ const userResolver = {
         return new GraphQLError(error.message);
       }
     },
+    async authUser(_: any, args: Record<string, any>, { user }: { user: { id: string, email: string }}) {
+      try {
+        return await UserModel.findById(user.id);
+      } catch (error: any) {
+        return new GraphQLError(error.message);
+      }
+    }
   },
   Mutation: {
     async signUp(

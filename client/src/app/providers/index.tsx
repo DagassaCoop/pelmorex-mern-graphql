@@ -1,0 +1,12 @@
+import { PropsWithChildren } from "react"
+
+// Providers
+import ApolloProvider from "./Apollo.provider";
+
+export default function Providers({ children }: PropsWithChildren) {
+    return (
+        <ApolloProvider>
+            {children}
+        </ApolloProvider>
+    );
+};

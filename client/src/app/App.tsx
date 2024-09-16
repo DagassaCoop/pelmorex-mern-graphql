@@ -1,7 +1,12 @@
 import RootLayout from "../components/layouts/Root.layout";
+import Providers from "./providers";
 
 function App() {
-  return <RootLayout />;
+  return (
+    <Providers>
+      <RootLayout />
+    </Providers>
+  )
 }
 
 export default App;

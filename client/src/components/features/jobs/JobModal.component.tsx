@@ -3,7 +3,7 @@ import { Modal } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 // Types
-import { TJobModalInfo } from "../../app/types/Job.type";
+import { TJobModalInfo } from "../../../app/types/Job.type";
 
 type TJobModalProps = {
   modal: boolean;

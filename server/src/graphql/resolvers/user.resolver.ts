@@ -92,7 +92,7 @@ const userResolver = {
 
       if (!user) throw new Error("No user with that email");
 
-      const validPassword = user.password === await bcrypt.hash(password, saltRounds)
+      const validPassword = await bcrypt.compare(password, user.password!)
 
       if (!validPassword) throw new Error("Incorrect password");
 

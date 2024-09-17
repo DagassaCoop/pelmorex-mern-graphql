@@ -1,5 +1,5 @@
 // Components
-import JobList from "../features/JobList.component";
+import JobList from "../features/jobs/JobList.component";
 
 export default function Listing() {
   return (

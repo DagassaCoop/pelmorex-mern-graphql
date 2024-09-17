@@ -13,16 +13,16 @@ import {
 } from "@mui/material";
 
 // API
-import { fetchJobsLatest } from "../../api/jobicy.api";
+import { fetchJobsLatest } from "../../../api/jobicy.api";
 
 // Types
-import { TJobModalInfo } from "../../app/types/Job.type";
+import { TJobModalInfo } from "../../../app/types/Job.type";
 
 // Components
 import JobModal from "./JobModal.component";
-import useAuthContext from "../../hooks/useAuthContext.hook";
+import useAuthContext from "../../../hooks/useAuthContext.hook";
 import { enqueueSnackbar } from "notistack";
-import { EUserStatus } from "../../app/types/User.type";
+import { EUserStatus } from "../../../app/types/User.type";
 
 export default function JobList() {
   const {authUser} = useAuthContext()

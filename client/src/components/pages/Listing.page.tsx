@@ -1,13 +1,10 @@
-import useAuthContext from "../../hooks/useAuthContext.hook"
-
+// Components
+import JobList from "../features/JobList.component";
 
 export default function Listing() {
-    const {authUser} = useAuthContext()
-
-    return (
-        <div>
-            <h1>Listing</h1>
-            <p>Hello {authUser?.username}</p>
-        </div>
-    )
+  return (
+    <div className="grid min-h-full bg-white p-6 lg:px-8">
+      <JobList />
+    </div>
+  );
 }

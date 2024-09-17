@@ -6,6 +6,8 @@ export const LOGIN = gql`
             user {
                 _id
                 username
+                email
+                status
             }
             userJwtToken {
                 token
@@ -20,6 +22,8 @@ mutation SignUp($input: SignUpInput!) {
     user {
       _id
       username
+      email
+      status
     }  
     userJwtToken {
       token

@@ -8,7 +8,7 @@ export type TUser = {
   username: string
   email: string
   password: string
-  status: EUserStatus
+  status: string
 }
 
 export type TNewUser = Omit<TUser, "id" | "status"> & { status: string }

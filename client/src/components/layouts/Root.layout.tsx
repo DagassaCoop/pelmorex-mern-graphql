@@ -1,15 +1,16 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import Header from '../shared/Header.component';
 
 function Root() {
   return (
-    <div>
+    <>
       <header>
-        {/* <Link>Login</Link> */}
+        <Header />
       </header>
       <main>
         <Outlet />
       </main>
-    </div>
+    </>
   );
 };
 

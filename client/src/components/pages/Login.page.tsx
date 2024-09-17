@@ -4,27 +4,27 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 // Assets
-import logo from "../../../public/pelmorex_logo.png";
+import logo from "../../assets/pelmorex_logo.png";
 
 // Hooks
 import useAuthContext from "../../hooks/useAuthContext.hook";
 
 type TFormValues = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 export default function Login() {
   const { authLogin } = useAuthContext();
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required("Email is required").email("Email is invalid"),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+    email: Yup.string().required("Email is required"),
+    password: Yup.string().required("Password is required"),
   });
 
-  const { register, handleSubmit, formState } = useForm<TFormValues>({ resolver: yupResolver(validationSchema) });
+  const { register, handleSubmit, formState } = useForm<TFormValues>({
+    resolver: yupResolver(validationSchema),
+  });
   const { errors } = formState;
 
   const loginHandler: SubmitHandler<TFormValues> = async (data) => {
@@ -51,11 +51,13 @@ export default function Login() {
             </label>
             <div className="mt-2">
               <input
-              id="email"
+                id="email"
                 {...register("email")}
                 className="block w-full rounded-md border-0 px-3 py-1.5 sm:px-1.5 mb-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              <div className="text-sm text-red-600">{errors.email?.message}</div>
+              <div className="text-sm text-red-600">
+                {errors.email?.message}
+              </div>
             </div>
           </div>
 
@@ -74,7 +76,9 @@ export default function Login() {
                 {...register("password")}
                 className="block w-full rounded-md border-0 px-3 py-1.5 sm:px-1.5 mb-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              <div className="text-sm text-red-600">{errors.password?.message}</div>
+              <div className="text-sm text-red-600">
+                {errors.password?.message}
+              </div>
             </div>
           </div>
 

@@ -85,7 +85,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         localStorage.setItem("token", token);
         setAuthUser(user);
 
-        navigate("/listing");
+        navigate("/login");
       }
 
       if (sighUpError) throw new Error(sighUpError.message);

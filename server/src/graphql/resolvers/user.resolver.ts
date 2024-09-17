@@ -2,9 +2,10 @@ import { GraphQLResolveInfo, GraphQLError } from "graphql";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 
+// Models
 import UserModel from "../../db/models/user.model";
 
-const saltRounds = 10
+const SALT_ROUNDS = 10;
 
 const userResolver = {
   Query: {
@@ -32,13 +33,17 @@ const userResolver = {
         return new GraphQLError(error.message);
       }
     },
-    async authUser(_: any, args: Record<string, any>, { user }: { user: { id: string, email: string }}) {
+    async authUser(
+      _: any,
+      args: Record<string, any>,
+      { user }: { user: { id: string; email: string } }
+    ) {
       try {
         return await UserModel.findById(user.id);
       } catch (error: any) {
         return new GraphQLError(error.message);
       }
-    }
+    },
   },
   Mutation: {
     async signUp(
@@ -56,12 +61,16 @@ const userResolver = {
       if (!username || !email || !password || !status)
         throw new Error("All fields must be defined");
 
+      const existUser = await UserModel.findOne({ email });
+
+      if (existUser) throw new Error("User is already exist!")
+
       const userToCreate = await UserModel.create({
         username,
         email,
-        password: await bcrypt.hash(password, saltRounds),
+        password: await bcrypt.hash(password, SALT_ROUNDS),
         status,
-        createdAt: new Date()
+        createdAt: new Date(),
       });
       const user = await userToCreate.save();
 
@@ -90,11 +99,12 @@ const userResolver = {
 
       const user = await UserModel.findOne({ email });
 
-      if (!user) throw new Error("No user with that email");
+      if (!user) throw new Error("Incorrect email or password!")
 
-      const validPassword = await bcrypt.compare(password, user.password!)
+      const validPassword = await bcrypt.compare(password, user.password!);
 
-      if (!validPassword) throw new Error("Incorrect password");
+      if (!validPassword) throw new Error("Incorrect email or password!")
+        
 
       const token = jsonwebtoken.sign(
         { id: user.id, email: user.email },

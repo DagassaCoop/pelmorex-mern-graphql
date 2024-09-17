@@ -29,7 +29,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
   const {data: authUserData, loading: authUserLoading, error: authUserError} = useQuery<{
     authUser: TUser
-  }>(GET_AUTH_USER, {skip: !Boolean(token)})
+  }>(GET_AUTH_USER, {skip: !Boolean(token), errorPolicy: "all"})
 
   // State
   const [authUser, setAuthUser] = useState<TUser | null>(null);
@@ -37,7 +37,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   // Log In
   const [login, { error: loginError }] = useMutation<{
     login: TUserWithToken;
-  }>(LOGIN);
+  }>(LOGIN, {errorPolicy: "all", fetchPolicy: "network-only"});
 
   const authLogin = async (credentials: {
     email: string;

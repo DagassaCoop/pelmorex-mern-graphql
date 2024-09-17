@@ -1,13 +1,11 @@
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Avatar } from "@mui/material";
+
 // Hooks
 import useAuthContext from "../../hooks/useAuthContext.hook";
 
 // Assets
 import logo from "../../assets/pelmorex_logo.png";
-
-// Helpers
-import { getRandomColor } from "../../helpers/TailwindColor";
 
 export default function Header() {
   const { authUser, logOut } = useAuthContext();

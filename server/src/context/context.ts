@@ -24,7 +24,7 @@ const context = async ({ req, res }: any) => {
 
   const user = await getUser(token);
 
-  if (!user) throw new Error("User is not Authenticated");
+  if (!user) throw new Error("User is not Authenticated")
 
   return { user };
 };

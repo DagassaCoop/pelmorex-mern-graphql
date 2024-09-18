@@ -1,7 +1,7 @@
 # Perlmorex-Mern-GraphQL
 
 ## Description
-Test task for Pelmorex company.
+Test task for Pelmorex.
 
 ## Installation
 
@@ -11,8 +11,6 @@ Test task for Pelmorex company.
 cd client/
 
 npm i
-
-npm run dev
 ```
 
 ### Server
@@ -21,9 +19,21 @@ npm run dev
 cd server/
 
 npm i
-
-npm run dev
 ```
+
+## Usage
+
+### Client
+
+```npm run dev```
+
+Use link: http://localhost:3000/
+
+### Server
+
+```npm run dev```
+
+Use link: http://localhost:4000/graphql
 
 ## Technologies
 

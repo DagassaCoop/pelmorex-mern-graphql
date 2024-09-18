@@ -11,21 +11,21 @@ import {
   TablePagination,
   CircularProgress,
 } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
 
 // API
 import { fetchJobsLatest } from "../../../api/jobicy.api";
 
 // Types
 import { TJobModalInfo } from "../../../app/types/Job.type";
+import { EUserStatus } from "../../../app/types/User.type";
 
 // Components
 import JobModal from "./JobModal.component";
 import useAuthContext from "../../../hooks/useAuthContext.hook";
-import { enqueueSnackbar } from "notistack";
-import { EUserStatus } from "../../../app/types/User.type";
 
 export default function JobList() {
-  const {authUser} = useAuthContext()
+  const { authUser } = useAuthContext();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -48,21 +48,23 @@ export default function JobList() {
 
   const handleClick = (_: unknown, id: number) => {
     if (authUser?.status === EUserStatus[EUserStatus.paid]) {
-      const job = jobs?.find(j => j.id === id)
-    
-      if (!job) return
+      const job = jobs?.find((j) => j.id === id);
+
+      if (!job) return;
 
       const info: TJobModalInfo = {
         title: job.jobTitle,
         geo: job.jobGeo,
         salaryCurrency: job.salaryCurrency ?? "N/A",
-        industry: job.jobIndustry
-      }
+        industry: job.jobIndustry,
+      };
 
-      setJobInfo(info)
+      setJobInfo(info);
       setModal(true);
     } else {
-      enqueueSnackbar("Feature not available for Free Users", {variant: "info"})
+      enqueueSnackbar("Feature not available for Free Users", {
+        variant: "info",
+      });
     }
   };
 
@@ -79,8 +81,8 @@ export default function JobList() {
     title: "",
     geo: "",
     salaryCurrency: "",
-    industry: [""]
-  })
+    industry: [""],
+  });
 
   return (
     <>
@@ -134,7 +136,7 @@ export default function JobList() {
         )}
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 20, 50]}
+        rowsPerPageOptions={authUser?.status === 'paid' ? [10, 20, 50] : [0]}
         component="div"
         count={jobs?.length ?? 0}
         rowsPerPage={rowsPerPage}
